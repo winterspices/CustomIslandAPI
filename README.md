@@ -1,6 +1,6 @@
 # Custom Island API
 
-This is a project intended for use my mod authors who wish to add custom islands without having to go through the faff of patching the base game themselves. If you are not a mod author, do not download this unless a mod requires it in its dependencies.
+This is a project intended for use by mod authors who wish to add custom islands without having to go through the faff of patching the base game themselves. If you are not a mod author, do not download this unless a mod requires it in its dependencies.
 
 Please note that this API is not complete and will have bugs and/or updates. If you have any requests do not hesitate to reach out.
 
