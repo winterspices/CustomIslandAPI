@@ -26,3 +26,42 @@ Example:
 ```
 IslandManager.sceneIndexes.Add(67, "Assets/Better Ports/Scenes/island 67 Bottleneck.unity");
 ```
+
+Finally, you will need to patch the class `Port` from your mod. At this version, I have not yet implemented a way to handle adding destinations to the `IslandManager`, so you must patch it yourself.
+
+We will patch the `Start()` method from the `Port` class, referencing `ref Port[] ___destinationPorts` in the arguments. Example:
+
+```
+[HarmonyPrefix]
+[HarmonyPatch("Start")]
+public static bool StartPatch(Port __instance, ref Port[] ___destinationPorts)
+{
+    if (__instance.name == "port 67 Bottleneck")
+    {
+        Port[] ports = GameObject.FindObjectsByType<Port>().ToList();
+
+        ___destinationPorts[0] = ports.FirstOrDefault(p => p.name == "port E 9 (Dragon cliffs)");
+        ___destinationPorts[1] = ports.FirstOrDefault(p => p.name == "port E 13 Sage Hills");
+        ___destinationPorts[2] = ports.FirstOrDefault(p => p.name == "port E 14 Serpent Isle");
+        ___destinationPorts[3] = ports.FirstOrDefault(p => p.name == "port E 12 New Port");
+        ___destinationPorts[4] = ports.FirstOrDefault(p => p.name == "port E 10 sanctuary");
+        ___destinationPorts[5] = ports.FirstOrDefault(p => p.name == "port E 11 crab beach");
+        ___destinationPorts[6] = ports.FirstOrDefault(p => p.name == "port E 29 (jungle)");
+        ___destinationPorts[7] = ports.FirstOrDefault(p => p.name == "port L 22 Lagoon Bay");
+        ___destinationPorts[8] = ports.FirstOrDefault(p => p.name == "port A0 (Gold Rock)");
+    }
+
+    return true;
+}
+```
+
+Couple of things to note:
+
+- Ensure the spelling of all strings is exact
+- Do not miss the `ref` in the arguments
+- In the Unity editor, if you set the `destinationPorts` of your port script to be length 8 then you must have 8 destinations. No more, no less. If I only wanted 2 destinations, I would use something like this:
+
+```
+___destinationPorts[0] = ports.FirstOrDefault(p => p.name == "port E 9 (Dragon cliffs)");
+___destinationPorts[1] = ports.FirstOrDefault(p => p.name == "port E 13 Sage Hills");
+```
