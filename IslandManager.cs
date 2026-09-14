@@ -21,19 +21,31 @@ namespace CustomIslandAPI
 
         public static void AddToTraderBoats(PortRegion region, IslandMarket market)
         {
-            if (region == PortRegion.emerald)
-            {
-                // find all trader boats
-                for (int i = 1; i < 7; i++)
-                {
-                    // expand their destination to include your island
-                    TraderBoat tb = GameObject.Find($"TraderBoat(E) ({i})").GetComponent<TraderBoat>();
-                    IslandMarket[] destinations = tb.destinations;
+            String reg = "";
 
-                    Array.Resize(ref destinations, destinations.Length + 1);
-                    destinations[destinations.Length - 1] = market;
-                    tb.destinations = destinations;
-                }
+            switch (region)
+            {
+                case PortRegion.alankh:
+                    reg = "A";
+                    break;
+                case PortRegion.emerald:
+                    reg = "E";
+                    break;
+                case PortRegion.medi:
+                    reg = "M";
+                    break;
+            }
+
+            // find all trader boats
+            for (int i = 1; i < 7; i++)
+            {
+                // expand their destination to include your island
+                TraderBoat tb = GameObject.Find($"TraderBoat({reg}) ({i})").GetComponent<TraderBoat>();
+                IslandMarket[] destinations = tb.destinations;
+
+                Array.Resize(ref destinations, destinations.Length + 1);
+                destinations[destinations.Length - 1] = market;
+                tb.destinations = destinations;
             }
         }
 

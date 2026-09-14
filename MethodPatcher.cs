@@ -198,26 +198,10 @@ namespace CustomIslandAPI
 
             // change all shaders
             Scene scene = SceneManager.GetSceneByPath(path);
-            Shader ts = Shader.Find("Tree Wind");
-            Shader cs = Shader.Find("SyntyStudios/CustomCharacter");
-
-            Debug.Log($"Searching for shaders in scene {path}");
 
             foreach (GameObject root in scene.GetRootGameObjects())
             {
-                Renderer[] renderers = root.GetComponentsInChildren<Renderer>(true);
-
-                foreach (Renderer renderer in renderers)
-                {
-                    foreach (Material material in renderer.sharedMaterials)
-                    {
-                        if (material != null && material.shader != null)
-                        {
-                            Shader shader = Shader.Find(material.shader.name);
-                            material.shader = shader;
-                        }
-                    }
-                }
+                IslandManager.InitialiseShaders(root.transform);
             }
 
             yield break;
