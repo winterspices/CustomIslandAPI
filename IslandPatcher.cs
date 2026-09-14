@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace CustomIslandAPI
 {
-    [BepInPlugin("com.winter.customislandapi", "Custom Island API", "1.0")]
+    [BepInPlugin("com.winter.customislandapi", "Custom Island API", "1.0.1")]
     public class IslandPatcher : BaseUnityPlugin
     {
         public const string pluginGuid = "com.winter.customislandapi";
         public const string pluginName = "Custom Island API";
-        public const string pluginVersion = "1.0";
+        public const string pluginVersion = "1.0.1";
 
         private void Awake()
         {
