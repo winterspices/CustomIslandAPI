@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -160,6 +161,33 @@ namespace CustomIslandAPI
                 __instance.carriedPriceReports = new PriceReport[100];
 
                 return false;
+            }
+
+            [HarmonyPrefix]
+            [HarmonyPatch("LoadData")]
+            public static void LoadDataPatch(TraderBoat __instance, ref TraderBoatData data)
+            {
+                Debug.LogWarning($"Price reports length from data: {data.carriedPriceReports.Length}");
+                if (data.carriedPriceReports.Length == 34)
+                {
+                    Debug.LogWarning($"Reized from {data.carriedPriceReports.Length} to 100");
+                    Array.Resize(ref data.carriedPriceReports, 100);
+                    
+                }
+                else
+                {
+                    Debug.LogWarning("Not resizing array as it is not 100");
+                }
+            }
+
+            [HarmonyPrefix]
+            [HarmonyPatch("UpdateCarriedPriceReports")]
+            public static void UpdateCarriedPriceReportsPatch(TraderBoat __instance, ref IslandMarket ___currentIslandMarket)
+            {
+                if (___currentIslandMarket.knownPrices.Length == 34)
+                {
+                    Array.Resize(ref ___currentIslandMarket.knownPrices, 100);
+                }
             }
         }
 
